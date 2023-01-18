@@ -216,17 +216,17 @@ export default function Main() {
                   })}
               </div>
             )}
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              exit={{ opacity: 0, y: 100 }}
-              className="absolute bottom-8 left-8"
-            >
-              {toast && <Toast />}
-            </motion.div>
           </main>
         ) : null}
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          exit={{ opacity: 0, y: 100 }}
+          className="absolute bottom-8 left-8"
+        >
+          {toast && <Toast />}
+        </motion.div>
       </div>
     </>
   );
