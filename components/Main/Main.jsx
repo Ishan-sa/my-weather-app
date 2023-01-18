@@ -96,7 +96,7 @@ export default function Main() {
         <div className="flex justify-center my-[5rem] mb-[4rem] flex-col items-center gap-5">
           <p className="text-3xl text-[#f5f5f5]">Today's Overview</p>
           <hr className="w-[100px] border-t-4 border-[#1E5676]" />
-          <p className="text-xl text-[#58f7ff]">{beforeText}</p>
+          <p className="text-xl text-[#58f7ff] text-center">{beforeText}</p>
         </div>
 
         <main className="flex flex-col items-center w-full">

@@ -2,6 +2,7 @@
 
 html, body{
     font-family: 'Chivo', sans-serif;
+    background: radial-gradient(circle, rgb(8, 19, 46) 0%, rgb(12, 14, 44) 100%); 
 }
 
 @tailwind base;
