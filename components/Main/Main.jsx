@@ -162,8 +162,8 @@ export default function Main() {
                       transition={{ duration: 0.8, delay: 0.5 }}
                     >
                       <Card
-                        title="Wind Speed"
-                        description={data.wind && data.wind.speed}
+                        title="Wind Gust"
+                        description={data.wind && data.wind.gust}
                       />
                       <Card
                         title="Air Pressure"
