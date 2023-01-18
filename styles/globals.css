@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html, body{
+    font-family: 'Chivo', sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sidebar{
+    background: radial-gradient(circle, rgb(8, 19, 46) 0%, rgb(12, 14, 44) 100%); 
+    /* background: #070618; */
+}
+
+input{
+    border: 0;
+}
+
+
+@media (max-width: 768px) {
+    .grid-cards{
+        grid-template-rows: 0fr 0fr;
+        grid-gap: 1rem;
+    }
+}
+@media (max-width: 408px) {
+    .grid-cards{
+        grid-template-rows: 0fr 0fr 0fr 0fr;
+        grid-gap: 1rem;
+    }
+}
