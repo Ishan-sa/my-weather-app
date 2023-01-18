@@ -18,6 +18,7 @@ A simple weather application build using openweathermap API.
 - Axios
 - Openweathermap API
 - Framer Motion
+- Lottie React
 
 # Link to API
 
