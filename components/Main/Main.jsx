@@ -7,6 +7,7 @@ import { WiHumidity } from "react-icons/wi";
 import Toast from "../Toast/Toast";
 import { motion } from "framer-motion";
 import { AiFillGithub } from "react-icons/ai";
+import Lottie from "lottie-react";
 
 export default function Main() {
   const [location, setLocation] = useState("");
@@ -17,6 +18,8 @@ export default function Main() {
   const [beforeText, setBeforeText] = useState(
     "Please search for a city name to continue."
   );
+  const [loading, setLoading] = useState(false);
+  const [displayData, setDisplayData] = useState(false);
 
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const lang = "en";
@@ -24,18 +27,25 @@ export default function Main() {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=${units}&lang=${lang}&appid=${apiKey}`;
   const getWeather = async () => {
     try {
+      setLoading(true);
       console.clear();
       const response = await axios.get(url);
-      setData(response.data);
-      console.log(response.data);
-      setWeather(response.data.weather);
-      setToast(false);
-      setTemp(true);
-      setBeforeText("");
+      setTimeout(() => {
+        setLoading(false);
+        setDisplayData(true);
+        setData(response.data);
+        setWeather(response.data.weather);
+        setToast(false);
+        setTemp(true);
+        setBeforeText("");
+        console.log(response.data);
+      }, 1000);
     } catch (e) {
+      setLoading(false);
       console.log(e);
       setToast(true);
       setTemp(false);
+      setDisplayData(false);
       setBeforeText("Please search for a city name to continue.");
     }
     setLocation("");
@@ -68,7 +78,10 @@ export default function Main() {
           <div className="flex items-center gap-10">
             <div className="input-container relative flex">
               <div className="absolute right-5 top-3 ">
-                <BsSearch className="text-lg text-[#8d8d8d]" />
+                <BsSearch
+                  className="text-lg text-[#8d8d8d] cursor-pointer"
+                  onClick={getWeather}
+                />
               </div>
               <div className="flex">
                 <input
@@ -97,108 +110,123 @@ export default function Main() {
           <p className="text-3xl text-[#f5f5f5]">Today's Overview</p>
           <hr className="w-[100px] border-t-4 border-[#1E5676]" />
           <p className="text-xl text-[#58f7ff] text-center">{beforeText}</p>
+          {loading && (
+            <Lottie
+              animationData={require("../../public/loading.json")}
+              style={{
+                width: "150px",
+                height: "150px",
+              }}
+            />
+          )}
         </div>
 
-        <main className="flex flex-col items-center w-full">
-          {temp && (
-            <motion.div
-              className="flex flex-col justify-between gap-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.2 }}
-            >
-              <div className="flex flex-row items-center">
-                <div className="flex flex-row items-center justify-between w-full gap-[12rem]">
-                  <p className="text-[#f5f5f5] text-3xl">{data.name}</p>
-                  <p className="text-[#bbbbbb] text-lg">
-                    {data.sys && data.sys.country}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex- flex-col">
-                  <div className="flex items-center gap-4">
-                    <p className="text-[#58f7ff] text-5xl">
-                      {Math.round(
-                        data.main && data.main.temp
-                      ).toLocaleString() + "°C"}
+        {displayData ? (
+          <main className="flex flex-col items-center w-full">
+            {temp && (
+              <motion.div
+                className="flex flex-col justify-between gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.2 }}
+              >
+                <div className="flex flex-row items-center">
+                  <div className="flex flex-row items-center justify-between w-full gap-[12rem]">
+                    <p className="text-[#f5f5f5] text-3xl">{data.name}</p>
+                    <p className="text-[#bbbbbb] text-lg">
+                      {data.sys && data.sys.country}
                     </p>
-                    <div className="flex flex-col gap-2">
-                      <p className="text-gray-700 text-xs">
-                        MIN <br />
-                        <span className="text-gray-400">
-                          {Math.round(data.main && data.main.temp_min) + "°C"}
-                        </span>
-                      </p>
-                      <p className="text-gray-700 text-xs">
-                        MAX <br />
-                        <span className="text-gray-400">
-                          {Math.round(data.main && data.main.temp_max) + "°C"}
-                        </span>
-                      </p>
-                    </div>
                   </div>
-                  <p className="text-[#a2a2a2] text-lg mt-1">
-                    Feels like {Math.round(data.main && data.main.feels_like)}°C
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex- flex-col">
+                    <div className="flex items-center gap-4">
+                      <p className="text-[#58f7ff] text-5xl">
+                        {Math.round(
+                          data.main && data.main.temp
+                        ).toLocaleString() + "°C"}
+                      </p>
+                      <div className="flex flex-col gap-2">
+                        <p className="text-gray-700 text-xs">
+                          MIN <br />
+                          <span className="text-gray-400">
+                            {Math.round(data.main && data.main.temp_min) + "°C"}
+                          </span>
+                        </p>
+                        <p className="text-gray-700 text-xs">
+                          MAX <br />
+                          <span className="text-gray-400">
+                            {Math.round(data.main && data.main.temp_max) + "°C"}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-[#a2a2a2] text-lg mt-1">
+                      Feels like {Math.round(data.main && data.main.feels_like)}
+                      °C
+                    </p>
+                  </div>
+                  <p className="text-[#dedede] text-right text-lg">
+                    {data.weather && data.weather[0].main}
                   </p>
                 </div>
-                <p className="text-[#dedede] text-right text-lg">
-                  {data.weather && data.weather[0].main}
-                </p>
-              </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
 
-          {temp && (
-            <div className="my-8 container">
-              {weather &&
-                weather.map((o, i) => {
-                  return (
-                    <motion.div
-                      key={i}
-                      className="grid gap-5 grid-flow-col grid-cards px-8 item container"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                    >
-                      <Card
-                        title="Wind Gust"
-                        description={data.wind && data.wind.gust}
-                      />
-                      <Card
-                        title="Air Pressure"
-                        description={data.main && data.main.pressure}
-                        icon={
-                          <RiCloudWindyLine
-                            style={{ fontSize: "2rem", color: "#58f7ff" }}
-                          />
-                        }
-                      />
-                      <Card
-                        title="Humidity"
-                        description={data.main && data.main.humidity}
-                        icon={
-                          <WiHumidity
-                            style={{ fontSize: "2rem", color: "#58f7ff" }}
-                          />
-                        }
-                      />
-                      <Card title="Visibility" description={data.visibility} />
-                    </motion.div>
-                  );
-                })}
-            </div>
-          )}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            exit={{ opacity: 0, y: 100 }}
-            className="absolute bottom-8 left-8"
-          >
-            {toast && <Toast />}
-          </motion.div>
-        </main>
+            {temp && (
+              <div className="my-8 container">
+                {weather &&
+                  weather.map((o, i) => {
+                    return (
+                      <motion.div
+                        key={i}
+                        className="grid gap-5 grid-flow-col grid-cards px-8 item container"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
+                      >
+                        <Card
+                          title="Wind Gust"
+                          description={data.wind && data.wind.gust}
+                        />
+                        <Card
+                          title="Air Pressure"
+                          description={data.main && data.main.pressure}
+                          icon={
+                            <RiCloudWindyLine
+                              style={{ fontSize: "2rem", color: "#58f7ff" }}
+                            />
+                          }
+                        />
+                        <Card
+                          title="Humidity"
+                          description={data.main && data.main.humidity}
+                          icon={
+                            <WiHumidity
+                              style={{ fontSize: "2rem", color: "#58f7ff" }}
+                            />
+                          }
+                        />
+                        <Card
+                          title="Visibility"
+                          description={data.visibility}
+                        />
+                      </motion.div>
+                    );
+                  })}
+              </div>
+            )}
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              exit={{ opacity: 0, y: 100 }}
+              className="absolute bottom-8 left-8"
+            >
+              {toast && <Toast />}
+            </motion.div>
+          </main>
+        ) : null}
       </div>
     </>
   );
