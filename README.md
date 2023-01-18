@@ -1,6 +1,6 @@
 # Introduction
 
-A simple weather application build using openweathermap API.
+A simple weather application built using openweathermap API.
 
 # Installation
 
