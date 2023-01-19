@@ -106,8 +106,8 @@ export default function Main() {
           </div>
         </div>
 
-        <div className="flex justify-center my-[5rem] mb-[4rem] flex-col items-center gap-5">
-          <p className="text-3xl text-[#f5f5f5]">Today's Overview</p>
+        <div className="flex justify-center mb-[1rem] flex-col items-center gap-5">
+          <p className="text-3xl text-[#f5f5f5] mt-7">Today's Overview</p>
           <hr className="w-[100px] border-t-4 border-[#1E5676]" />
           <p className="text-xl text-[#58f7ff] text-center">{beforeText}</p>
           {loading && (
@@ -122,7 +122,7 @@ export default function Main() {
         </div>
 
         {displayData ? (
-          <main className="flex flex-col items-center w-full">
+          <main className="flex flex-col items-center w-full pb-5">
             {temp && (
               <motion.div
                 className="flex flex-col justify-between gap-4"
@@ -131,7 +131,7 @@ export default function Main() {
                 transition={{ delay: 0.4, duration: 0.2 }}
               >
                 <div className="flex flex-row items-center">
-                  <div className="flex flex-row items-center justify-between w-full gap-[12rem]">
+                  <div className="flex flex-row items-center justify-between w-full gap-[8rem]">
                     <p className="text-[#f5f5f5] text-3xl">{data.name}</p>
                     <p className="text-[#bbbbbb] text-lg">
                       {data.sys && data.sys.country}
