@@ -187,11 +187,11 @@ export default function Main() {
                       >
                         <Card
                           title="Wind Gust"
-                          description={data.wind && data.wind.gust}
+                          description={data.wind && data.wind.gust || "Not Found"}
                         />
                         <Card
                           title="Air Pressure"
-                          description={data.main && data.main.pressure}
+                          description={data.main && data.main.pressure || "Not Found"}
                           icon={
                             <RiCloudWindyLine
                               style={{ fontSize: "2rem", color: "#58f7ff" }}
@@ -200,7 +200,7 @@ export default function Main() {
                         />
                         <Card
                           title="Humidity"
-                          description={data.main && data.main.humidity}
+                          description={data.main && data.main.humidity || "Not Found"}
                           icon={
                             <WiHumidity
                               style={{ fontSize: "2rem", color: "#58f7ff" }}
@@ -209,7 +209,7 @@ export default function Main() {
                         />
                         <Card
                           title="Visibility"
-                          description={data.visibility}
+                          description={data.visibility || "Not Found"}
                         />
                       </motion.div>
                     );
