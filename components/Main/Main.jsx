@@ -7,6 +7,7 @@ import { WiHumidity } from "react-icons/wi";
 import Toast from "../Toast/Toast";
 import { motion } from "framer-motion";
 import { AiFillGithub } from "react-icons/ai";
+import { MdVisibility } from "react-icons/md"
 import Lottie from "lottie-react";
 
 export default function Main() {
@@ -210,6 +211,11 @@ export default function Main() {
                         <Card
                           title="Visibility"
                           description={data.visibility || "Not Found"}
+                          icon={
+                            <MdVisibility
+                              style={{ fontSize: "2rem", color: "#58f7ff" }}
+                            />
+                          }
                         />
                       </motion.div>
                     );
